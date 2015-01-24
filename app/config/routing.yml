@@ -1,7 +1,7 @@
-foundation_backend:
-    resource: "@FoundationBackendBundle/Controller/"
-    type:     annotation
-    prefix:   /
+#foundation_backend:
+#    resource: "@FoundationBackendBundle/Controller/"
+#    type:     annotation
+#    prefix:   /
 
 admin:
     resource: "@AdminBundle/Controller/"

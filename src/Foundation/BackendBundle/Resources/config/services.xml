@@ -13,4 +13,8 @@
         </service>
     </services>
     -->
+    
+    <services>
+        <service id="fundation.backend.entity.security.md5encoder" class="Foundation\BackendBundle\Entity\Security\Md5Encoder" />
+    </services>
 </container>

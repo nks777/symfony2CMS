@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ua" xml:lang="ua">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="author" content="Paweł 'kilab' Balicki - kilab.pl" />
+        <title>SimpleAdmin</title>
+        {% stylesheets 'bundles/foundationwebadmin/css/*' filter='cssrewrite' %}
+            <link rel="stylesheet" type="text/css" href="{{ asset_url }}" media="screen" />
+        {% endstylesheets %}
+
+        {% javascripts '@FoundationWebAdminBundle/Resources/public/js/*' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        
+        <script type="text/javascript">
+            $(function () {
+                $(".box .h_title").not(this).next("ul").hide("normal");
+                $(".box .h_title").not(this).next("#home").show("normal");
+                $(".box").children(".h_title").click(function () {
+                    $(this).next("ul").slideToggle();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="wrap">
+            <div id="header">
+                <div id="top">
+                    <div class="left">
+{#                        <p>Last login: <strong>23-04-2012 23:12</strong></p>#}
+                    </div>
+                    <div class="right">
+                        <div class="align-right">
+                            <p>Welcome, <strong>{{ app.user.username }}</strong> [ <a href="{{ path('_logout') }}">logout</a> ]</p>
+                        </div>
+                    </div>
+                </div>
+                {% include 'FoundationWebAdminBundle:Parent:topmenu.html.twig' %}
+            </div>
+
+            <div id="content">
+                {% include 'FoundationWebAdminBundle:Parent:leftmenu.html.twig' %}
+                {% block main %}
+                    There have be main block
+                {% endblock %}
+                <div class="clear"></div>
+            </div>
+
+            <div id="footer">
+                <div class="left">
+                    <p>Design: <a href="http://kilab.pl">Paweł Balicki</a> | Admin Panel: <a href="{{ asset('/') }}">YourSite.com</a></p>
+                </div>
+                <div class="right">
+                    <p><a href="">Example link 1</a> | <a href="">Example link 2</a></p>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

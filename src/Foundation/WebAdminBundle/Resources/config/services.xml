@@ -6,7 +6,7 @@
 
     <!--
     <services>
-        <service id="admin.example" class="AdminBundle\Example">
+        <service id="foundation_web_admin.example" class="Foundation\WebAdminBundle\Example">
             <argument type="service" id="service_id" />
             <argument>plain_value</argument>
             <argument>%parameter_name%</argument>

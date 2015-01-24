@@ -4,23 +4,33 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="author" content="Paweł 'kilab' Balicki - kilab.pl" />
         <title>SimpleAdmin</title>
-        <link rel="stylesheet" type="text/css" href="css/login.css" media="screen" />
+        {% stylesheets 'bundles/foundationwebadmin/css/*' filter='cssrewrite' %}
+            <link rel="stylesheet" type="text/css" href="{{ asset_url }}" media="screen" />
+        {% endstylesheets %}
     </head>
     <body>
         <div class="wrap">
             <div id="content">
                 <div id="main">
                     <div class="full_w">
-                        <form action="" method="post">
+                        {% if error %}
+                        <div class="n_error">
+                            <p>
+                                {{ error.messageKey|trans(error.messageData) }}
+                            </p>
+                        </div>
+                        {% endif %}
+                        
+                        <form action="{{ path('login_authenticate') }}" method="post">
                             <label for="login">Username:</label>
-                            <input id="login" name="login" class="text" />
+                            <input id="login" name="_username" class="text" value="{{ last_username }}" />
                             <label for="pass">Password:</label>
-                            <input id="pass" name="pass" type="password" class="text" />
+                            <input id="pass" name="_password" type="password" class="text" />
                             <div class="sep"></div>
                             <button type="submit" class="ok">Login</button> <a class="button" href="">Forgotten password?</a>
                         </form>
                     </div>
-                    <div class="footer">&raquo; <a href="">http://yourpage.com</a> | Admin Panel</div>
+                    <div class="footer">&raquo; <a href="{{ asset('/') }}">http://yourpage.com</a> | Admin Panel</div>
                 </div>
             </div>
         </div>

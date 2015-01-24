@@ -1,19 +1,16 @@
 <?php
 
-namespace AdminBundle\Controller;
+namespace Foundation\WebAdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-/**
- * @Route("/admin")
- */
 class DefaultController extends Controller
 {
     /**
      * @Route("/")
-     * @Template("AdminBundle:Default:index.html.twig")
+     * @Template("FoundationWebAdminBundle:Default:index.html.twig")
      */
     public function indexAction()
     {

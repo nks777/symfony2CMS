@@ -71,3 +71,9 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+jms_di_extra:
+    locations:
+        all_bundles: false
+        bundles: [FoundationBackendBundle, FoundationWebAdminBundle]
+        directories: ["%kernel.root_dir%/../src"]

@@ -3,10 +3,13 @@
 namespace Foundation\BackendBundle\Entity\Security;
 
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
+use JMS\DiExtraBundle\Annotation as DI;
 
 /**
  * Description of Md5Encoder
  * UPDATE `symfony`.`user` SET `password`=MD5(CONCAT(LEFT(salt,10),'s^q', 'password')) WHERE id=?;
+ * 
+ * @DI\Service("fundation.backend.entity.security.md5encoder")
  * @author nks
  */
 class Md5Encoder implements PasswordEncoderInterface{

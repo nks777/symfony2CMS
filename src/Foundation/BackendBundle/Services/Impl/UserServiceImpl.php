@@ -3,6 +3,7 @@ namespace Foundation\BackendBundle\Services\Impl;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use Foundation\BackendBundle\Services\UserService;
+use Foundation\BackendBundle\Repository\UserRepository;
 
 /**
  * Description of UserService
@@ -12,7 +13,30 @@ use Foundation\BackendBundle\Services\UserService;
  */
 class UserServiceImpl implements UserService{
     
-    public function getSomething() {
-        return "something";
+    private $userRepository;
+    
+    /**
+     * @DI\InjectParams({
+     *     "em" = @DI\Inject("doctrine.orm.entity_manager"),
+     *     "userRepository" = @DI\Inject("foundation.repository.user")
+     * })
+     * 
+     * @param UserRepository $userRepository
+     */
+    public function __construct(UserRepository $userRepository) {
+        $this->userRepository = $userRepository;
     }
+    
+    public function addOrUpdateAdmin() {
+        
+    }
+
+    public function deleteAdmin() {
+        
+    }
+
+    public function getAdminsList() {
+        return $this->userRepository->getListOfAdmin();
+    }
+
 }

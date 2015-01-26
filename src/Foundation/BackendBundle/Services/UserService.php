@@ -7,5 +7,7 @@ namespace Foundation\BackendBundle\Services;
  * @author nks
  */
 interface UserService {
-    function getSomething();
+    function getAdminsList();
+    function addOrUpdateAdmin();
+    function deleteAdmin();
 }

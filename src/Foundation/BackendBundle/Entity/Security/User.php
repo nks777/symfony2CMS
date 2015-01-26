@@ -52,11 +52,26 @@ class User implements UserInterface, \Serializable {
      * @ORM\Column(type="string",length=255)
      */
     private $roles;
+    
+    /**
+     *@ORM\Column(type="datetime", nullable=false)
+     * @var date
+     */
+    private $createDate;
 
     public function eraseCredentials() {
         $this->password = null;
     }
     
+    function getCreateDate() {
+        return $this->createDate;
+    }
+
+    function setCreateDate(date $createDate) {
+        $this->createDate = $createDate;
+    }
+
+        
     public function setRolesArray(array $roles){
         $this->roles = implode(",", $roles);
     }

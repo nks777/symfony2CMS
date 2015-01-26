@@ -1,5 +1,38 @@
 {% extends "FoundationWebAdminBundle:Parent:wrap.html.twig" %}
 
 {% block main %}
-    something is "{{ sm }}"
+    <div class="full_w">
+        <div class="h_title">List of user</div>
+        <h2>Administrators</h2>
+        <p>List of administrators of the your beautiful site</p>
+
+        <div class="entry">
+            <div class="sep"></div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Date of creation</th>
+                    <th scope="col" style="width: 65px;">Modify</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for user in admins %}
+                <tr>
+                    <td class="align-center">{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.createDate | date('d-m-Y') }}</td>
+                    <td>
+                        <a href="#" class="table-icon edit" title="Edit"></a>
+                        <a href="#" class="table-icon delete" title="Delete"></a>
+                    </td>
+                </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

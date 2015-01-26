@@ -23,8 +23,6 @@ class UserControlController extends Controller{
 //     * @DI\Inject("foundation.service.userservice")
 //     * @var UserService 
     
-    /**
-     */
     private $userService;
     
     /**
@@ -41,13 +39,13 @@ class UserControlController extends Controller{
 
     
     /**
-     * @Route("/")
+     * @Route("/", name="_list_of_admin")
      * @Method({"GET"})
      * @Template("FoundationWebAdminBundle:UserControl:userlist.html.twig")
      * @param Symfony\Component\HttpFoundation\Request $request
      */
     public function listAction(Request $request) {
-        return array('sm'=>  $this->userService->getSomething());
+        return array('admins' => $this->userService->getAdminsList());
     }
     
 }

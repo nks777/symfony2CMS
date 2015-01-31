@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Foundation\BackendBundle\Services\UserService;
+use Foundation\BackendBundle\Services\Exceptions\ServiceErrorException;
 
 use JMS\DiExtraBundle\Annotation\Inject;
 use JMS\DiExtraBundle\Annotation\InjectParams;
@@ -46,6 +46,26 @@ class UserControlController extends Controller{
      */
     public function listAction(Request $request) {
         return array('admins' => $this->userService->getAdminsList());
+    }
+    
+    
+    /**
+     * @Route("/remove", name="_delete_admin")
+     * @Method({"GET"})
+     * @param Symfony\Component\HttpFoundation\Request $request
+     */
+    public function deleteAdmin(Request $request) {
+        $id = $request->query->get("id");
+        $user = $this->get('security.context')->getToken()->getUser();
+        try{
+            $this->userService->deleteAdmin($id, $user);
+        }
+        catch (ServiceErrorException $e){
+            $request->getSession()->getFlashBag()->add('error', $e->getMessage());
+            
+            return $this->redirect($request->headers->get("referer"));
+        }
+        return $this->redirect($this->generateUrl("_list_of_admin"));
     }
     
 }

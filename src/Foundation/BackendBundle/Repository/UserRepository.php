@@ -9,5 +9,6 @@ use Foundation\BackendBundle\Entity\Security\User;
 interface UserRepository {
     
     public function getListOfAdmin();
-    function DeleteAdmin(User $user);
+    function deleteAdmin(User $user);
+    function getAdminById($userId);
 }

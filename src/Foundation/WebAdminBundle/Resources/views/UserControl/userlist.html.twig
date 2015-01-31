@@ -1,6 +1,9 @@
 {% extends "FoundationWebAdminBundle:Parent:wrap.html.twig" %}
 
 {% block main %}
+    <script>
+        
+    </script>
     <div class="full_w">
         <div class="h_title">List of user</div>
         <h2>Administrators</h2>
@@ -9,6 +12,10 @@
         <div class="entry">
             <div class="sep"></div>
         </div>
+        
+        {% include 'FoundationWebAdminBundle:Include:flashMessages.html.twig'%}
+        
+
         <table>
             <thead>
                 <tr>
@@ -27,7 +34,13 @@
                     <td>{{ user.createDate | date('d-m-Y') }}</td>
                     <td>
                         <a href="#" class="table-icon edit" title="Edit"></a>
-                        <a href="#" class="table-icon delete" title="Delete"></a>
+                        <a href="#"
+                           data-href="{{path('_delete_admin', {'id':user.id})}}"
+                           onclick="
+                            if(confirm('R u sure want to delete {{ user.username }}?')){
+                                window.location=$(this).data('href');
+        
+                            }" class="table-icon delete" title="Delete"></a>
                     </td>
                 </tr>
                 {% endfor %}

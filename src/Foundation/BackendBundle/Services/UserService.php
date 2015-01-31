@@ -1,6 +1,8 @@
 <?php
 
 namespace Foundation\BackendBundle\Services;
+
+use \Foundation\BackendBundle\Entity\Security\User;
 /**
  * Description of UserServiceInt
  *
@@ -9,5 +11,5 @@ namespace Foundation\BackendBundle\Services;
 interface UserService {
     function getAdminsList();
     function addOrUpdateAdmin();
-    function deleteAdmin();
+    function deleteAdmin($removedUserId, User $currentUser = null);
 }

@@ -14,17 +14,30 @@ use \Doctrine\Common\Collections\Criteria;
  */
 class UserRepositoryImpl extends Repository implements UserRepository{
     
-    protected $entityName = "FoundationBackendBundle:Security\User";
+    function __construct() {
+        parent::__construct("FoundationBackendBundle:Security\User","u");
+    }
 
-
-    public function DeleteAdmin(User $user) {
-        
+    public function deleteAdmin(User $user) {
+        $this->em->remove($user);
+//        $this->em->flush();
     }
 
     public function getListOfAdmin() {
         $criteria = Criteria::create();
         $criteria->where(Criteria::expr()->eq("roles", "ROLE_ADMIN"));
-        return $this->createQueryBuilder("u")->addCriteria($criteria)->getQuery()->execute();
+        return $this->getByCriteria($criteria);
+    }
+    
+    public function getAdminById($id){
+        $criteria = Criteria::create();
+        $criteria->where(
+                Criteria::expr()->andX(
+                        Criteria::expr()->eq("roles", "ROLE_ADMIN"), 
+                        Criteria::expr()->eq("id", $id)
+                )
+        );
+        return $this->getOneByCriteria($criteria);
     }
 
 }

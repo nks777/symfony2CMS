@@ -1,0 +1,10 @@
+{% set errors = app.session.flashbag.get('error') %}
+{% if errors | length %}
+<div class="n_error">
+    {% for flashMessage in  errors %}
+    <p>
+    {{ flashMessage }}
+    </p>
+    {% endfor %}
+</div>
+{% endif %}

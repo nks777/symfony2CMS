@@ -10,6 +10,7 @@ use \Foundation\BackendBundle\Entity\Security\User;
  */
 interface UserService {
     function getAdminsList();
+    function getAdminById($id);
     function addOrUpdateAdmin();
     function deleteAdmin($removedUserId, User $currentUser = null);
 }

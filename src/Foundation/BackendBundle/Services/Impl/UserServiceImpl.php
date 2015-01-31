@@ -5,7 +5,7 @@ use JMS\DiExtraBundle\Annotation as DI;
 use Foundation\BackendBundle\Services\UserService;
 use Foundation\BackendBundle\Repository\UserRepository;
 use \Foundation\BackendBundle\Entity\Security\User;
-use Foundation\BackendBundle\Services\Exceptions\ServiceErrorException;
+use Foundation\BackendBundle\Exceptions\ServiceErrorException;
 
 /**
  * Description of UserService
@@ -43,6 +43,10 @@ class UserServiceImpl implements UserService{
 
     public function getAdminsList() {
         return $this->userRepository->getListOfAdmin();
+    }
+
+    public function getAdminById($id) {
+        return $this->userRepository->getAdminById($id);
     }
 
 }

@@ -20,7 +20,7 @@ class UserRepositoryImpl extends Repository implements UserRepository{
 
     public function deleteAdmin(User $user) {
         $this->em->remove($user);
-//        $this->em->flush();
+        $this->em->flush();
     }
 
     public function getListOfAdmin() {

@@ -9,6 +9,7 @@ namespace Foundation\BackendBundle\Repository\Abstr;
  */
 use \JMS\DiExtraBundle\Annotation as DI;
 use \Doctrine\Common\Collections\Criteria;
+use Foundation\BackendBundle\Exceptions\RepositoryException;
 
 /**
  * We use empty adapter for using Dependency Injection via annotation
@@ -69,7 +70,11 @@ abstract class Repository {
     
     protected function getOneByCriteria(Criteria $criteria, $alias = null){
         $criteria->setMaxResults(1);
-        return $this->getByCriteria($criteria, $alias)[0];
+        $allResults = $this->getByCriteria($criteria, $alias);
+        if(! key_exists(0, $allResults)){
+            throw new RepositoryException("Can't found entity ($this->entityName) by chosen criteria");
+        }
+        return $allResults[0];
     }
     
 }

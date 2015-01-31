@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Foundation\BackendBundle\Services\Exceptions\ServiceErrorException;
+use Foundation\BackendBundle\Exceptions\ServiceErrorException;
 
 use JMS\DiExtraBundle\Annotation\Inject;
 use JMS\DiExtraBundle\Annotation\InjectParams;
@@ -20,8 +20,6 @@ use JMS\DiExtraBundle\Annotation\Service;
  * @author nks
  */
 class UserControlController extends Controller{
-//     * @DI\Inject("foundation.service.userservice")
-//     * @var UserService 
     
     private $userService;
     
@@ -42,7 +40,6 @@ class UserControlController extends Controller{
      * @Route("/", name="_list_of_admin")
      * @Method({"GET"})
      * @Template("FoundationWebAdminBundle:UserControl:userlist.html.twig")
-     * @param Symfony\Component\HttpFoundation\Request $request
      */
     public function listAction(Request $request) {
         return array('admins' => $this->userService->getAdminsList());
@@ -52,7 +49,6 @@ class UserControlController extends Controller{
     /**
      * @Route("/remove", name="_delete_admin")
      * @Method({"GET"})
-     * @param Symfony\Component\HttpFoundation\Request $request
      */
     public function deleteAdmin(Request $request) {
         $id = $request->query->get("id");
@@ -66,6 +62,35 @@ class UserControlController extends Controller{
             return $this->redirect($request->headers->get("referer"));
         }
         return $this->redirect($this->generateUrl("_list_of_admin"));
+    }
+    
+    /**
+     * @Route("/edit/{id}", requirements={"id" = "\d*"}, name="_edit_admin")
+     * @Method({"GET"})
+     * @Template("FoundationWebAdminBundle:UserControl:useredit.html.twig")
+     */
+    public function editAction(Request $request, $id) {
+        $user = null;
+        if(strlen($id)){
+            $id = (int) $id;
+            $user = $this->userService->getAdminById($id);
+        }
+        else{
+            $user = new User();
+        }
+        $form = $this->createFormBuilder($user)
+                ->add("id", "hidden")
+                ->add("username", "text")
+                ->add("password", "password")
+                ->add("email", "email")
+                ->add('save', 'submit', array('label' => 'Save'))
+                ->getForm();
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            echo "valid form";
+            die();
+        }
+        return array("form" => $form->createView());
     }
     
 }

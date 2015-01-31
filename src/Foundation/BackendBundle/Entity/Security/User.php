@@ -2,8 +2,13 @@
 
 namespace Foundation\BackendBundle\Entity\Security;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+//orm
+use Doctrine\ORM\Mapping as ORM;
+//form validation
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints\Email; 
 
 /**
  * Description of User
@@ -16,17 +21,21 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity
+ * @UniqueEntity(fields="username", message="Such username already exists.")
+ * @UniqueEntity(fields="email", message="User with such email already exists.")
  */
 class User implements UserInterface, \Serializable {
 
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
+     * @NotBlank()
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
+     * @NotBlank(message="Username should not be blank.")
      * @ORM\Column(type="string", length=25, unique=true)
      */
     private $username;
@@ -42,8 +51,8 @@ class User implements UserInterface, \Serializable {
     private $salt;
     
     /**
-     *
      * @ORM\Column(type="string", length=60, unique=true)
+     * @Email(checkHost=true)
      */
     private $email;
     
@@ -129,7 +138,7 @@ class User implements UserInterface, \Serializable {
             $this->id,
             $this->username,
             $this->password,
-                // $this->salt,
+            $this->salt,
             $this->email
         ));
     }
@@ -139,7 +148,7 @@ class User implements UserInterface, \Serializable {
                 $this->id,
                 $this->username,
                 $this->password,
-                // $this->salt,
+                $this->salt,
                 $this->email
                 ) = unserialize($serialized);
     }

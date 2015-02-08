@@ -66,7 +66,7 @@ class UserControlController extends Controller{
     
     /**
      * @Route("/edit/{id}", requirements={"id" = "\d*"}, name="_edit_admin")
-     * @Method({"GET"})
+     * @Method({"GET","POST"})
      * @Template("FoundationWebAdminBundle:UserControl:useredit.html.twig")
      */
     public function editAction(Request $request, $id) {
@@ -79,14 +79,20 @@ class UserControlController extends Controller{
             $user = new User();
         }
         $form = $this->createFormBuilder($user)
-                ->add("id", "hidden")
-                ->add("username", "text")
-                ->add("password", "password")
+                ->add("id", "hidden")                
+                ->add("username", "text", array(
+                    'attr' => array("autocomplete" => "off")
+                    ))
+                ->add("password", "password", array(
+                    'attr' => array("autocomplete" => "off"), 
+                    "required"=>false
+                    ))
                 ->add("email", "email")
                 ->add('save', 'submit', array('label' => 'Save'))
                 ->getForm();
         $form->handleRequest($request);
         if ($form->isValid()) {
+            var_dump($_REQUEST);
             echo "valid form";
             die();
         }

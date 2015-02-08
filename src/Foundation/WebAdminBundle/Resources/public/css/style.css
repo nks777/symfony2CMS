@@ -246,10 +246,10 @@ button:hover, .button:hover{
 	border-radius: 3px;
 
 }
-#main form .text{
-	width: 100%;
+#main form input[type=text],#main form input[type=email],#main form input[type=password]{
+	width: 98%;
 }
-#main form .textarea{
+#main form textarea{
 	width: 100%;
 }
 #main form .err{
@@ -269,9 +269,14 @@ button:hover, .button:hover{
 #main .n_ok p{background: #DFF6C5 url(../images/i_ok.png) no-repeat 4px center; color: #496528; margin: 0; padding: 7px 25px;}
 #main .n_ok a{color: #006312; font-weight: bold;}
 
-#main .n_error{background: #FDE4E1;border: 1px solid #B16A6C; border-radius: 3px; margin: 20px 15px;padding: 1px;}
-#main .n_error p{background: #F4CAC6 url(../images/i_error.png) no-repeat 4px center; color: #630E18; margin: 0; padding: 7px 25px;}
+#main .n_error{background: #FDE4E1;border: 1px solid #B16A6C; border-radius: 3px; margin: 20px 15px; padding: 1px;}
+#main .n_error p, #main .n_error li{background: #F4CAC6 url(../images/i_error.png) no-repeat 4px center; color: #630E18; margin: 0; padding: 7px 25px;}
 #main .n_error a{color: #822121; font-weight: bold;}
+
+#content #main ul.n_error{
+	list-style-type: none;        
+	margin: 0 0 7px 0;
+}
 
 /* MAIN TABLE */
 

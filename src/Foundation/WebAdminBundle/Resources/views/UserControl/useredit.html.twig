@@ -1,7 +1,13 @@
 {% extends "FoundationWebAdminBundle:Parent:wrap.html.twig" %}
 
+{% form_theme form 'FoundationWebAdminBundle:Form:fields.html.twig' %}
+
 {% block main %}
-    {{ form_start(form) }}
+    {{ form_start(form, {'attr': {'autocomplete': 'off'} }) }}
+    <!-- life hack for google chrome (it ignore autocomplate = off)-->
+    <input name="form[username]" type="text" value="" style="display: none;" />
+    <input name="form[password]" type="text" value="" style="display: none;" />
+    
     {{ form_widget(form) }}
     {{ form_end(form) }}
 {% endblock %}

@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints\Email; 
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * Description of User
@@ -40,12 +41,14 @@ class User implements UserInterface, \Serializable {
 
     /**
      * @NotBlank()
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @ORM\Column(type="string", length=60, unique=true)
+     * @Length(min=3, max=60)
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Length(min=6, max=60)
      */
     private $password;
     

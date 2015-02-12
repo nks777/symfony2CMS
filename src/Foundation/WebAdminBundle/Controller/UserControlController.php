@@ -22,6 +22,9 @@ use JMS\DiExtraBundle\Annotation\Service;
  */
 class UserControlController extends Controller{
     
+    const DELETE_SUCCESS = "The user has been succesfully deleted";
+    const SAVE_SUCCESS = "User %s was successfully saved";
+    
     private $userService;
     
     /**
@@ -56,6 +59,8 @@ class UserControlController extends Controller{
         
         try{
             $this->userService->deleteAdmin($id, $this->getCurrentUser());
+            $request->getSession()->getFlashBag()
+                        ->add('success', self::DELETE_SUCCESS);
         }
         catch (ServiceErrorException $e){
             $request->getSession()->getFlashBag()->add('error', $e->getMessage());
@@ -93,7 +98,8 @@ class UserControlController extends Controller{
         if ($form->isValid()) {
             try {
                 $this->userService->saveAdmin($user, $this->getCurrentUser());
-                $request->getSession()->getFlashBag()->add('success', "User " . $user->getUsername() . " was successfully saved");
+                $request->getSession()->getFlashBag()
+                        ->add('success', sprintf(self::SAVE_SUCCESS,$user->getUsername()));
             } catch (ServiceErrorException $e) {
                 $request->getSession()->getFlashBag()->add('error', $e->getMessage());
             } 

@@ -18,7 +18,7 @@ class UserRepositoryImpl extends Repository implements UserRepository{
         parent::__construct(User::ENTITY_NAME, "u");
     }
     
-    public function updateUser($user) {
+    public function update($user) {
         $this->assertRightEnity($user);
         
         $qb = $this->em->createQueryBuilder();
@@ -66,7 +66,7 @@ class UserRepositoryImpl extends Repository implements UserRepository{
     
     public function save(User $user){
         if($user->getId()){
-            $this->updateUser($user);
+            $this->update($user);
         }
         else {
             $this->insert($user);

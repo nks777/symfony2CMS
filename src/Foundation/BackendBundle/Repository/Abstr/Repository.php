@@ -81,7 +81,7 @@ abstract class Repository {
     protected function assertRightEnity($entity){
         $clazz = get_class($entity);
         if($clazz::ENTITY_NAME !== $this->entityName){
-            throw new RepositoryException("You're using repository wich can't work with this entity");
+            throw new RepositoryException("You're using repository wich can't work with this entity. Or you've just forgotten add const ENTITY_NAME.");
         }
     }
     

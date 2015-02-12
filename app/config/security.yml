@@ -3,7 +3,7 @@
 security:
     # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        #Symfony\Component\Security\Core\User\User: plaintext
         Foundation\BackendBundle\Entity\Security\User: 
             id: fundation.backend.entity.security.md5encoder
 
@@ -38,6 +38,7 @@ security:
             form_login:
                 login_path: /admin/login
                 check_path: /admin/login/authenticate
+                success_handler: fundation.backend.entity.security.logonlistener
             logout:
                 path:   /admin/logout
                 target: /admin

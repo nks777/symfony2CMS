@@ -5,6 +5,7 @@ namespace Foundation\BackendBundle\Entity\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 //orm
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\ManyToOne;
 //form validation
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -25,17 +26,20 @@ use Symfony\Component\Validator\Constraints\Email;
  * @UniqueEntity(fields="email", message="User with such email already exists.")
  */
 class User implements UserInterface, \Serializable {
+    
+    const ENTITY_NAME = "FoundationBackendBundle:Security\User";
+    
+    const ROLE_ADMIN = "ROLE_ADMIN";
 
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
-     * @NotBlank()
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @NotBlank(message="Username should not be blank.")
+     * @NotBlank()
      * @ORM\Column(type="string", length=25, unique=true)
      */
     private $username;
@@ -52,6 +56,7 @@ class User implements UserInterface, \Serializable {
     
     /**
      * @ORM\Column(type="string", length=60, unique=true)
+     * @NotBlank()
      * @Email(checkHost=true)
      */
     private $email;
@@ -67,16 +72,59 @@ class User implements UserInterface, \Serializable {
      * @var date
      */
     private $createDate;
+    
+    /**
+     *@ORM\Column(type="datetime", nullable=false)
+     * @var date
+     */
+    private $lastUpdateDate;
+    
+    /**
+     * @ManyToOne(targetEntity="User", fetch="EAGER")
+     * @ORM\JoinColumn(onDelete="SET NULL", nullable=true)
+     * @var User
+     */
+    private $updater;
+    
+    /**
+     *@ORM\Column(type="datetime", nullable=true)
+     * @var date
+     */
+    private $lastLogin;
 
     public function eraseCredentials() {
         $this->password = null;
     }
     
+    function getLastLogin() {
+        return $this->lastLogin;
+    }
+
+    function setLastLogin(\DateTime $lastLogin) {
+        $this->lastLogin = $lastLogin;
+    }
+
+    function getLastUpdateDate() {
+        return $this->lastUpdateDate;
+    }
+
+    function getUpdater() {
+        return $this->updater;
+    }
+
+    function setLastUpdateDate(\DateTime $lastUpdateDate) {
+        $this->lastUpdateDate = $lastUpdateDate;
+    }
+
+    function setUpdater(User $updater) {
+        $this->updater = $updater;
+    }
+        
     function getCreateDate() {
         return $this->createDate;
     }
 
-    function setCreateDate(date $createDate) {
+    function setCreateDate(\DateTime $createDate) {
         $this->createDate = $createDate;
     }
 
@@ -92,7 +140,11 @@ class User implements UserInterface, \Serializable {
     public function getRoles() {
         return explode(",", $this->roles);
     }
-
+    
+    public function hasRole($role){
+        return in_array($role, $this->getRoles(), true);
+    }
+            
     function setSalt($salt) {
         $this->salt = $salt;
     }

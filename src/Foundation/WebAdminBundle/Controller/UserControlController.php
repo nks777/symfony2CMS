@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Foundation\BackendBundle\Exceptions\ServiceErrorException;
+use Foundation\BackendBundle\Entity\Security\User;
 
 use JMS\DiExtraBundle\Annotation\Inject;
 use JMS\DiExtraBundle\Annotation\InjectParams;
@@ -52,14 +53,12 @@ class UserControlController extends Controller{
      */
     public function deleteAdmin(Request $request) {
         $id = $request->query->get("id");
-        $user = $this->get('security.context')->getToken()->getUser();
+        
         try{
-            $this->userService->deleteAdmin($id, $user);
+            $this->userService->deleteAdmin($id, $this->getCurrentUser());
         }
         catch (ServiceErrorException $e){
             $request->getSession()->getFlashBag()->add('error', $e->getMessage());
-            
-            return $this->redirect($request->headers->get("referer"));
         }
         return $this->redirect($this->generateUrl("_list_of_admin"));
     }
@@ -92,11 +91,19 @@ class UserControlController extends Controller{
                 ->getForm();
         $form->handleRequest($request);
         if ($form->isValid()) {
-            var_dump($_REQUEST);
-            echo "valid form";
-            die();
+            try {
+                $this->userService->saveAdmin($user, $this->getCurrentUser());
+                $request->getSession()->getFlashBag()->add('success', "User " . $user->getUsername() . " was successfully saved");
+            } catch (ServiceErrorException $e) {
+                $request->getSession()->getFlashBag()->add('error', $e->getMessage());
+            } 
+            return $this->redirect($this->generateUrl("_list_of_admin"));
         }
         return array("form" => $form->createView());
+    }
+    
+    private function getCurrentUser() {
+        return $this->get('security.context')->getToken()->getUser();
     }
     
 }

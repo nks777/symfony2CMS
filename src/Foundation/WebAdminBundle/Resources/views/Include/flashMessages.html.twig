@@ -8,3 +8,14 @@
     {% endfor %}
 </div>
 {% endif %}
+
+{% set success = app.session.flashbag.get('success') %}
+{% if success | length %}
+<div class="n_ok">
+    {% for flashMessage in  success %}
+    <p>
+    {{ flashMessage }}
+    </p>
+    {% endfor %}
+</div>
+{% endif %}

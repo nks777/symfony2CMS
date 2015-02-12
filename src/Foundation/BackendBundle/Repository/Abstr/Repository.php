@@ -47,6 +47,7 @@ abstract class Repository {
         return $this->em->getRepository($this->entityName);
     }
 
+    //TODO: check when it's used
     public function __call($method, $arguments){
         if(method_exists($this->getDoctrineRepository(), $method)){
             return call_user_func_array(array($this->getDoctrineRepository(), $method), $arguments);
@@ -75,6 +76,30 @@ abstract class Repository {
             throw new RepositoryException("Can't found entity ($this->entityName) by chosen criteria");
         }
         return $allResults[0];
+    }
+    
+    protected function assertRightEnity($entity){
+        $clazz = get_class($entity);
+        if($clazz::ENTITY_NAME !== $this->entityName){
+            throw new RepositoryException("You're using repository wich can't work with this entity");
+        }
+    }
+    
+    public function delete($entity){
+        $this->assertRightEnity($entity);
+        $this->em->remove($entity);
+        $this->em->flush($entity);
+    }
+    
+    public function insert($entity){
+        $this->assertRightEnity($entity);
+        $this->em->persist($entity);
+        $this->em->flush($entity);
+    }
+    
+    public function update($entity){
+        $this->assertRightEnity($entity);
+        $this->em->flush($entity);
     }
     
 }

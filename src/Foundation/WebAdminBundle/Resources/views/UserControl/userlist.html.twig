@@ -18,7 +18,10 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Username</th>
-                    <th scope="col">Date of creation</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Last update</th>
+                    <th scope="col">Last login</th>
                     <th scope="col" style="width: 65px;">Modify</th>
                 </tr>
             </thead>
@@ -28,9 +31,12 @@
                 <tr>
                     <td class="align-center">{{ user.id }}</td>
                     <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
                     <td>{{ user.createDate | date('d-m-Y') }}</td>
+                    <td>{{ user.lastUpdateDate | date('d-m-Y H:i:s') }} by {{ user.updater ? user.updater.username : "deleted user" }}</td>
+                    <td>{{ user.lastLogin | date('d-m-Y H:i:s') }}</td>
                     <td>
-                        <a href="#" class="table-icon edit" title="Edit"></a>
+                        <a href="{{path('_edit_admin',{'id':user.id})}}" class="table-icon edit" title="Edit"></a>
                         <a href="#"
                            data-href="{{path('_delete_admin', {'id':user.id})}}"
                            onclick="

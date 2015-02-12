@@ -2,8 +2,6 @@
 
 namespace Foundation\BackendBundle\Repository\Impl;
 
-use JMS\DiExtraBundle\Annotation\InjectParams;
-use JMS\DiExtraBundle\Annotation\Inject;
 use JMS\DiExtraBundle\Annotation\Service;
 use \Foundation\BackendBundle\Repository\Abstr\Repository;
 use \Foundation\BackendBundle\Repository\UserRepository;

@@ -56,7 +56,7 @@ class LogonListener extends \Symfony\Component\Security\Http\Authentication\Defa
     public function onAuthenticationSuccess(Request $request, TokenInterface $token) {
         $user = $token->getUser();
         $user->setLastLogin(new \DateTime());
-        $this->userRepository->updateUser($user);
+        $this->userRepository->update($user);
         return $this->httpUtils->createRedirectResponse($request, $this->determineTargetUrl($request));
     }
 

@@ -1,0 +1,9 @@
+{% extends "FoundationWebAdminBundle:Parent:wrap.html.twig" %}
+
+{#{% form_theme form 'FoundationWebAdminBundle:Form:fields.html.twig' %}#}
+
+{% block main %}
+    {% for number in 1..filter.pageCount %}
+        {{ number}}
+    {% endfor %}
+{% endblock %}

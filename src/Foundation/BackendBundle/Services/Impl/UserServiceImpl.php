@@ -35,7 +35,6 @@ class UserServiceImpl implements UserService{
     
     /**
      * @InjectParams({
-     *     "em" = @Inject("doctrine.orm.entity_manager"),
      *     "userRepository" = @Inject("foundation.repository.user")
      * })
      * 
@@ -64,7 +63,7 @@ class UserServiceImpl implements UserService{
     
     private function generateSalt(){
         $date = md5((new \DateTime())->format("dDjlNSWZFmMntLoYyaABgGhHisy"));
-        return md5("salt_in_salt=)" + $date + "we_deed_to_go_deeper:)");
+        return md5("salt_in_salt=)" + $date + "we_need_to_go_deeper:)");
     }
 
 

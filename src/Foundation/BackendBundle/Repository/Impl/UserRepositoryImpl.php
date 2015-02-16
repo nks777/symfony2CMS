@@ -21,8 +21,9 @@ class UserRepositoryImpl extends Repository implements UserRepository{
     public function update($user) {
         $this->assertRightEnity($user);
         
-        $qb = $this->em->createQueryBuilder();
-        $q = $qb->update(User::ENTITY_NAME, "u");
+//        $qb = $this->em->createQueryBuilder();
+        $qb = $this->getDoctrineRepository()->createQueryBuilder("u");
+        $q = $qb->update();
         if(!empty($user->getPassword())){
             $q->set("u.password", "?6");
             $q->setParameter(6, $user->getPassword());

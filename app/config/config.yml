@@ -79,3 +79,6 @@ jms_di_extra:
         all_bundles: false
         bundles: [FoundationBackendBundle, FoundationWebAdminBundle]
         directories: ["%kernel.root_dir%/../src"]
+        
+parameters:
+    jms_di_extra.controller_resolver.class: Foundation\BackendBundle\Kernel\SessionControllerResolver

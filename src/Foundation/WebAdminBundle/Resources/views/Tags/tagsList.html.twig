@@ -3,6 +3,9 @@
 {#{% form_theme form 'FoundationWebAdminBundle:Form:fields.html.twig' %}#}
 
 {% block main %}
+    test is {{test}}
+    <br />
+    
     {% for number in 1..filter.pageCount %}
         {{ number}}
     {% endfor %}

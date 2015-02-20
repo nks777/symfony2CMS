@@ -9,6 +9,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Foundation\BackendBundle\Services\TagService;
 use Foundation\BackendBundle\Filter\PaginationFilter;
 use Foundation\BackendBundle\Filter\EmptyFilter;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Foundation\BackendBundle\Kernel\AbsractController;
+use Foundation\BackendBundle\Kernel\Annotation\SessionScope;
+
+//use Doctrine\Common\Annotations\AnnotationRegistry;
 
 use JMS\DiExtraBundle\Annotation\Inject;
 use JMS\DiExtraBundle\Annotation\InjectParams;
@@ -18,13 +23,23 @@ use JMS\DiExtraBundle\Annotation\InjectParams;
  * @Route("/tags")
  * @author nks
  */
-class TagController extends Controller{
+class TagController extends AbsractController{
     
     const ITEMS_ON_PAGE = 20;
 
 
     private $tagService;
-    private $filter;
+    
+    /**
+     * @SessionScope
+     */
+    protected $filter;
+    
+    /**
+     *
+     *  @SessionScope
+     */
+    protected $test =1;
     
     /**
      * @InjectParams({
@@ -32,11 +47,12 @@ class TagController extends Controller{
      * })
      * @param TagService $tagService
      */
-    public function __construct(TagService $tagService) {
+    public function __construct(TagService $tagService=null) {
         $this->tagService = $tagService;
+//        $this->tagService = new \Foundation\BackendBundle\Services\Impl\TagServiceImpl();
         $this->createFilter();
     }
-
+    
     
     public function createFilter(){
         $this->filter = new PaginationFilter($this->tagService->getTagCount(), self::ITEMS_ON_PAGE, 
@@ -51,9 +67,26 @@ class TagController extends Controller{
      * @Template("FoundationWebAdminBundle:Tags:tagsList.html.twig")
      */
     public function listAction(Request $request) {
-
+        $this->filter->setCurrentPage(5);
+        
+        ++$this->test;
         return array(
             'filter' => $this->filter,
+            'test' => $this->test,
         );
     }
+    
+    public function __sleep() {
+        return array('test');
+    }
+
+
+//    public function __destruct() {
+//        die();
+//        if($this->has('session')){
+//            $this->get("session")->set(get_class($this), serialize($this));
+//        }
+//        echo "serialize";
+//        var_dump($this);
+//    }
 }
